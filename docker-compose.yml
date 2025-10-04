@@ -1,0 +1,42 @@
+version: '3.9'
+
+
+services:
+api-tests:
+build: .
+container_name: api_tests
+command: pytest --html=report_api.html --self-contained-html src/api_tests/
+volumes:
+- ./:/app
+
+
+e2e-tests:
+build: .
+container_name: e2e_tests
+command: pytest -m e2e --html=report_e2e.html --self-contained-html src/e2e_tests/
+volumes:
+- ./:/app
+
+
+k6-jsonplaceholder:
+image: loadimpact/k6:latest
+container_name: k6_jsonplaceholder
+volumes:
+- ./perf/k6_jsonplaceholder.js:/perf/k6_jsonplaceholder.js
+command: run /perf/k6_jsonplaceholder.js
+
+
+k6-reqres:
+image: loadimpact/k6:latest
+container_name: k6_reqres
+volumes:
+- ./perf/k6_reqres.js:/perf/k6_reqres.js
+command: run /perf/k6_reqres.js
+
+
+k6-petstore:
+image: loadimpact/k6:latest
+container_name: k6_petstore
+volumes:
+- ./perf/k6_petstore.js:/perf/k6_petstore.js
+command: run /perf/k6_petstore.js

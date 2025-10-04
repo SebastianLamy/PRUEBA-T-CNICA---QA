@@ -1,0 +1,8 @@
+pytest
+requests
+jsonschema
+pytest-html
+playwright
+pytest-playwright
+k6
+webdriver-manager
